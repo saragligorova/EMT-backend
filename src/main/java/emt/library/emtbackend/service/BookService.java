@@ -11,8 +11,9 @@ import java.util.Optional;
 public interface BookService {
     List<Book> findAll();
     Optional<Book> findById(Long id);
-    Optional<Book> findByName(String name);
     Optional<Book> save(BookDto bookDto);
     void delete(Long id);
     Optional<Book> edit(Long id, BookDto bookDto);
+    Optional<Book> lendBookById(Long id);
+
 }

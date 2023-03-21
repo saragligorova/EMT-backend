@@ -7,6 +7,7 @@ import emt.library.emtbackend.model.enumerations.Category;
 import emt.library.emtbackend.model.exceptions.AuthorNotFoundException;
 import emt.library.emtbackend.model.exceptions.BookNotFoundException;
 import emt.library.emtbackend.model.exceptions.CategoryNotFoundException;
+import emt.library.emtbackend.model.exceptions.NotAvailableException;
 import emt.library.emtbackend.repository.AuthorRepository;
 import emt.library.emtbackend.repository.BookRepository;
 import emt.library.emtbackend.service.BookService;
@@ -35,11 +36,6 @@ public class BookServiceImpl implements BookService{
     @Override
     public Optional<Book> findById(Long id) {
         return this.bookRepository.findById(id);
-    }
-
-    @Override
-    public Optional<Book> findByName(String name) {
-        return this.bookRepository.findBookByName();
     }
 
     @Override
@@ -73,5 +69,20 @@ public class BookServiceImpl implements BookService{
 
         return Optional.of(this.bookRepository.save(book));
 
+    }
+
+    @Override
+    public Optional<Book> lendBookById(Long id) {
+        Book book = this.bookRepository.findById(id)
+                .orElseThrow(BookNotFoundException::new);
+
+        if(book.getAvailableCopies() > 0){
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+        }
+        else {
+            throw new NotAvailableException();
+        }
+
+        return Optional.of(this.bookRepository.save(book));
     }
 }
