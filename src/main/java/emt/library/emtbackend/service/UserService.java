@@ -1,4 +1,9 @@
 package emt.library.emtbackend.service;
 
-public class UserService {
+import emt.library.emtbackend.model.User;
+
+import java.util.Optional;
+
+public interface UserService{
+    Optional<User> findByUsername(String username);
 }

@@ -1,14 +1,12 @@
 package emt.library.emtbackend.model;
 
 import emt.library.emtbackend.model.enumerations.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "library_users")
 public class User {
     @Id
     private String username;
